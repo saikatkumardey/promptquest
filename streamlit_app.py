@@ -48,17 +48,25 @@ def add_footer():
 
 
 def app():
+
+    st.set_page_config(
+        page_title="PromptQuest: search for midjourney prompt ideas",
+        page_icon="🔍",
+        layout="centered",
+        initial_sidebar_state="collapsed",
+        )
+
     _, mid, _ = st.columns([1, 6, 1])
 
     with mid:
         st.title("🔍 PromptQuest")
-        st.markdown("Explore a world of midjourney ideas")
+        st.markdown("Explore a world of midjourney prompt ideas!")
         st.markdown("<br>", unsafe_allow_html=True)
 
         query_str = st.text_input(
             label="search",
             key="query",
-            placeholder="enter search query",
+            placeholder="enter search query like 'cute dog' or 'landscape photography'",
             label_visibility="collapsed",
         )
 
@@ -70,7 +78,7 @@ def app():
             if results:
                 display(results)
             else:
-                st.write("Sorry, no results found. Try another query!")
+                st.write("Sorry, no results found. Try another query (say, **cute dog**)!")
         add_footer()
 
 
