@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 from streamlit_extras.let_it_rain import rain
 from whoosh import index
-from whoosh.qparser import QueryParser
+from whoosh.qparser import QueryParser, query
 
 ix = index.open_dir("indexdir")
 
@@ -15,10 +15,10 @@ def search(query_str, top_n=5):
     searcher = ix.searcher()
 
     # Define the query
-    query = QueryParser("prompt", ix.schema).parse(query_str)
+    qp = QueryParser("prompt", ix.schema,termclass=query.Variations).parse(query_str)
 
     # Search the index and retrieve the top n results
-    results = searcher.search(query, limit=top_n)
+    results = searcher.search(qp, limit=top_n)
 
     # Return the results
     return results
@@ -62,7 +62,8 @@ def app():
             label_visibility="collapsed",
         )
 
-        num_results = st.slider("Max results", 1, 20, step=1, value=5)
+        with st.sidebar:
+            num_results = st.slider("Max results", 1, 20, step=1, value=5)
 
         if query_str.strip():
             results = search(query_str, num_results)
