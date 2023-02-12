@@ -1,0 +1,5 @@
+cleantext==1.1.4
+joblib==1.2.0
+streamlit==1.18.1
+streamlit_extras==0.2.6
+whoosh==2.7.4
